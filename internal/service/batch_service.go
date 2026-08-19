@@ -86,7 +86,7 @@ type BatchExportRequest struct {
 
 func (s *BatchService) Export(ctx context.Context, req BatchExportRequest) ([]*domain.RightsCase, int, error) {
 	if err := domain.ValidateExportRange(req.From, req.To); err != nil {
-		return nil, 0, err
+		return nil, 0, fmt.Errorf("validate export range: %w", err)
 	}
 	return s.store.ListItems(ctx, domain.ItemFilter{
 		From:     req.From,
